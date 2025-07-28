@@ -47,33 +47,29 @@ COPY --from=backend /app /app/backend
 RUN cd /app/backend && /opt/venv/bin/pip install --no-cache-dir -r requirements.txt
 
 
-RUN mkdir -p /etc/supervisor/conf.d && \
-    cat > /etc/supervisor/conf.d/supervisord.conf << 'EOF'
-[supervisord]
-nodaemon=true
-user=root
 
-logfile=/var/log/supervisor/supervisord.log
-pidfile=/var/run/supervisord.pid
-
-[program:frontend]
-command=npm run dev -- --host 0.0.0.0 --port 80
-directory=/app
-stdout_logfile=/var/log/supervisor/frontend.log
-stderr_logfile=/var/log/supervisor/frontend.log
-autorestart=true
-priority=10
-
-[program:backend]
-command=/opt/venv/bin/python -m uvicorn server:app --host 0.0.0.0 --port 8000
-directory=/app/backend
-stdout_logfile=/var/log/supervisor/backend.log
-stderr_logfile=/var/log/supervisor/backend.log
-autorestart=true
-priority=20
-EOF
-
-RUN mkdir -p /var/log/supervisor
+RUN mkdir -p /etc/supervisor/conf.d /var/log/supervisor && \
+    echo '[supervisord]' > /etc/supervisor/conf.d/supervisord.conf && \
+    echo 'nodaemon=true' >> /etc/supervisor/conf.d/supervisord.conf && \
+    echo 'user=root' >> /etc/supervisor/conf.d/supervisord.conf && \
+    echo 'logfile=/var/log/supervisor/supervisord.log' >> /etc/supervisor/conf.d/supervisord.conf && \
+    echo 'pidfile=/var/run/supervisord.pid' >> /etc/supervisor/conf.d/supervisord.conf && \
+    echo '' >> /etc/supervisor/conf.d/supervisord.conf && \
+    echo '[program:frontend]' >> /etc/supervisor/conf.d/supervisord.conf && \
+    echo 'command=npm run dev -- --host 0.0.0.0 --port 80' >> /etc/supervisor/conf.d/supervisord.conf && \
+    echo 'directory=/app' >> /etc/supervisor/conf.d/supervisord.conf && \
+    echo 'stdout_logfile=/var/log/supervisor/frontend.log' >> /etc/supervisor/conf.d/supervisord.conf && \
+    echo 'stderr_logfile=/var/log/supervisor/frontend.log' >> /etc/supervisor/conf.d/supervisord.conf && \
+    echo 'autorestart=true' >> /etc/supervisor/conf.d/supervisord.conf && \
+    echo 'priority=10' >> /etc/supervisor/conf.d/supervisord.conf && \
+    echo '' >> /etc/supervisor/conf.d/supervisord.conf && \
+    echo '[program:backend]' >> /etc/supervisor/conf.d/supervisord.conf && \
+    echo 'command=/opt/venv/bin/python -m uvicorn server:app --host 0.0.0.0 --port 8000' >> /etc/supervisor/conf.d/supervisord.conf && \
+    echo 'directory=/app/backend' >> /etc/supervisor/conf.d/supervisord.conf && \
+    echo 'stdout_logfile=/var/log/supervisor/backend.log' >> /etc/supervisor/conf.d/supervisord.conf && \
+    echo 'stderr_logfile=/var/log/supervisor/backend.log' >> /etc/supervisor/conf.d/supervisord.conf && \
+    echo 'autorestart=true' >> /etc/supervisor/conf.d/supervisord.conf && \
+    echo 'priority=20' >> /etc/supervisor/conf.d/supervisord.conf
 
 EXPOSE 80 8000
 
