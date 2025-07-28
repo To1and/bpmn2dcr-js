@@ -1,4 +1,4 @@
-/* Global styles */
+
 * {
   margin: 0;
   padding: 0;
@@ -18,12 +18,12 @@ html, body {
   height: 100%;
 }
 
-/* BPMN.js specific styles */
+
 .bjs-container {
   background: white;
 }
 
-/* Fix BPMN palette layout issues */
+
 .bjs-container .djs-palette {
   left: 20px;
   top: 20px;
@@ -59,42 +59,42 @@ html, body {
   text-align: center;
 }
 
-/* Ensure palette entries are properly spaced */
+
 .bjs-container .djs-palette .djs-palette-entries .djs-palette-entry:hover {
   background: #f5f5f5 !important;
 }
 
-/* Fix palette separator styling */
+
 .bjs-container .djs-palette .djs-palette-separator {
   border-top: 1px solid #eee;
   margin: 4px 0;
 }
 
-/* Hide bpmn.io powered-by logo */
+
 .bjs-powered-by {
   display: none !important;
 }
 
-/* Hide bpmn.io branding in footer */
+
 .bjs-container .powered-by {
   display: none !important;
 }
 
-/* Hide any bpmn.io watermark */
+
 .bjs-container .bjs-powered-by,
 .bjs-container [class*="powered-by"],
 .bjs-container [class*="bpmn-io"] {
   display: none !important;
 }
 
-/* DCR specific styles */
+
 .dcr-canvas {
   width: 100%;
   height: 100%;
 }
 
-/* DCR-js仿真模式鼠标样式 - 基于dcr-js原始实现 */
-/* 默认情况下所有元素都是default cursor */
+
+
 .simulating .djs-hit-all {
   cursor: default !important;
 }
@@ -103,7 +103,7 @@ html, body {
   cursor: default !important;
 }
 
-/* 只有enabled的事件才显示pointer - 通过动态CSS类控制 */
+
 .simulating .djs-element.enabled .djs-hit-all {
   cursor: pointer !important;
 }
@@ -112,7 +112,7 @@ html, body {
   cursor: pointer !important;
 }
 
-/* Custom scrollbar for webkit browsers */
+
 ::-webkit-scrollbar {
   width: 8px;
   height: 8px;

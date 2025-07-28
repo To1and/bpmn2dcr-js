@@ -1,12 +1,13 @@
-# 设置构建环境
+
 FROM node:18-alpine AS builder
+
 WORKDIR /app
 
-# 安装主应用依赖
+
 COPY package.json package-lock.json* ./
 RUN npm install
 
-# 安装DCR-js依赖
+
 COPY dcr-js/package.json dcr-js/yarn.lock* dcr-js/
 COPY dcr-js/app/package.json dcr-js/app/
 COPY dcr-js/modeler/package.json dcr-js/modeler/
@@ -21,14 +22,14 @@ COPY src/ src/
 COPY public/ public/
 COPY tsconfig*.json vite.config.ts index.html ./
 
-# Python后端构建
+
 FROM python:3.11-alpine AS backend
 WORKDIR /app
 COPY bpmn2dcr-pycore/requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 COPY bpmn2dcr-pycore/ .
 
-# 最终镜像 - Railway版本
+
 FROM node:18-alpine
 RUN apk add --no-cache python3 py3-pip supervisor && \
     python3 -m venv /opt/venv
@@ -37,10 +38,10 @@ WORKDIR /app
 COPY --from=builder /app /app
 COPY --from=backend /app /app/backend
 
-# 安装Python依赖
+
 RUN cd /app/backend && /opt/venv/bin/pip install --no-cache-dir -r requirements.txt
 
-# 创建supervisor配置目录和配置文件
+
 RUN mkdir -p /etc/supervisor/conf.d && \
     cat > /etc/supervisor/conf.d/supervisord.conf << 'EOF'
 [supervisord]

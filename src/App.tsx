@@ -25,7 +25,7 @@ const MainContent = styled.div`
 const EditorSection = styled.div<{ $ratio: number }>`
   flex: ${props => props.$ratio};
   position: relative;
-  overflow: hidden; /* 防止内容溢出 */
+  overflow: hidden;
   ${props => props.$ratio === 0 ? 'display: none;' : ''}
 `;
 
@@ -33,15 +33,15 @@ const PlaceholderSection = styled.div<{ $ratio: number }>`
   flex: ${props => props.$ratio};
   position: relative;
   background: #f5f5f5;
-  overflow: hidden; /* 防止内容溢出 */
+  overflow: hidden;
   ${props => props.$ratio === 0 ? 'display: none;' : ''}
 `;
 
 const App: React.FC = () => {
   const [dcrXml, setDcrXml] = useState<string | undefined>(undefined);
   const [isTranslating, setIsTranslating] = useState(false);
-  const [topRatio, setTopRatio] = useState(1); // 上半部分的flex比例
-  const [bottomRatio, setBottomRatio] = useState(1); // 下半部分的flex比例
+  const [topRatio, setTopRatio] = useState(1); 
+  const [bottomRatio, setBottomRatio] = useState(1); 
   const translationService = new BPMN2DCRTranslationService();
 
   const handleBPMNChange = useCallback(async (bpmnXml: string) => {
@@ -79,21 +79,21 @@ const App: React.FC = () => {
     toast.success(message);
   }, []);
 
-  // 分割线相关回调函数
+  
   const handleResize = useCallback((ratio: number) => {
-    // ratio 是上半部分应该占据的比例 (0-1)
+    
     setTopRatio(ratio);
     setBottomRatio(1 - ratio);
   }, []);
 
   const handleMaximizeTop = useCallback(() => {
-    // 下箭头：使上半部分（BPMN Editor）全屏
+    
     setTopRatio(1);
     setBottomRatio(0);
   }, []);
 
   const handleMaximizeBottom = useCallback(() => {
-    // 上箭头：使下半部分（DCR Simulator）全屏
+    
     setTopRatio(0);
     setBottomRatio(1);
   }, []);
