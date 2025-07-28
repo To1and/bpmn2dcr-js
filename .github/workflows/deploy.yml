@@ -1,0 +1,70 @@
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '18'
+        cache: 'npm'
+    
+    - name: Setup Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.11'
+    
+    - name: Install dependencies
+      run: |
+        npm install
+        cd dcr-js && yarn install
+        cd ../bpmn2dcr-pycore && pip install -r requirements.txt
+    
+    - name: Build main application
+      run: npm run build
+    
+    - name: Build DCR-js application
+      run: |
+        cd dcr-js
+        yarn predeploy
+    
+    - name: Prepare deployment files
+      run: |
+        mkdir -p deploy
+        cp -r dist/* deploy/
+        cp -r dcr-js/app/build deploy/dcr/
+        
+        # 创建index.html重定向到主应用
+        cat > deploy/index.html << 'EOF'
+        <!DOCTYPE html>
+        <html>
+        <head>
+          <title>BPMN2DCR</title>
+          <meta charset="utf-8">
+          <meta name="viewport" content="width=device-width, initial-scale=1">
+        </head>
+        <body>
+          <div id="root"></div>
+          <script type="module" src="/assets/index.js"></script>
+        </body>
+        </html>
+        EOF
+    
+    - name: Deploy to GitHub Pages
+      if: github.ref == 'refs/heads/main'
+      uses: peaceiris/actions-gh-pages@v3
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: ./deploy
+        cname: # 如果有自定义域名，在这里添加

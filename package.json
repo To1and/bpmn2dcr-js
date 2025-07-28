@@ -1,0 +1,41 @@
+{
+  "name": "bpmn2dcr-js",
+  "version": "1.0.0",
+  "description": "Real-time BPMN to DCR translation and simulation tool",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "preview": "vite preview",
+    "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
+    "start:python": "cd bpmn2dcr-pycore && python -m uvicorn server:app --reload --port 8000",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d dist"
+  },
+  "dependencies": {
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "bpmn-js": "^18.6.2",
+    "diagram-js": "^15.2.4",
+    "styled-components": "^6.1.15",
+    "react-icons": "^5.5.0",
+    "react-toastify": "^11.0.5",
+    "file-saver": "^2.0.5",
+    "elkjs": "^0.10.0",
+    "fast-xml-parser": "^3.19.0"
+  },
+  "devDependencies": {
+    "@types/react": "^19.0.10",
+    "@types/react-dom": "^19.0.4",
+    "@types/file-saver": "^2.0.7",
+    "@vitejs/plugin-react": "^4.3.4",
+    "typescript": "~5.7.2",
+    "vite": "^6.1.0",
+    "eslint": "^9.19.0",
+    "@eslint/js": "^9.19.0",
+    "typescript-eslint": "^8.22.0",
+    "eslint-plugin-react-hooks": "^5.0.0",
+    "eslint-plugin-react-refresh": "^0.4.18",
+    "gh-pages": "^6.1.1"
+  }
+}

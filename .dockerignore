@@ -1,0 +1,55 @@
+# 忽略node_modules
+node_modules/
+**/node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# 忽略构建输出
+dist/
+build/
+*.local
+
+# 忽略开发文件
+.git/
+.github/
+.vscode/
+.idea/
+*.md
+!README.md
+
+# 忽略环境文件
+.env*
+*.log
+
+# 忽略缓存文件
+.cache/
+.parcel-cache/
+.eslintcache
+.npm/
+
+# 忽略OS文件
+.DS_Store
+Thumbs.db
+
+# 忽略测试覆盖率
+coverage/
+*.lcov
+
+# 忽略Python缓存
+__pycache__/
+*.py[cod]
+*$py.class
+
+# 忽略部署文件
+deploy.sh
+deploy.bat
+DOCKER_DEPLOYMENT.md
+
+# 忽略临时文件
+tmp/
+temp/
+.claude/
+
+claude_doc/
+CLAUDE.md
