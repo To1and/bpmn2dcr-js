@@ -15,31 +15,6 @@ bpmn2dcr-js converts Business Process Model and Notation (BPMN) diagrams to Dyna
 - Import/export functionality for BPMN and DCR formats
 
 
-## Installation and Setup
-
-**Prerequisites:**
-- Docker
-
-**Setup Steps:**
-
-1. Clone the repository:
-```bash
-git clone https://github.com/yourusername/bpmn2dcr-js.git
-cd bpmn2dcr-js
-```
-
-2. Build and run with Docker:
-```bash
-docker build -t bpmn2dcr-js .
-docker run -p 80:80 -p 8000:8000 bpmn2dcr-js
-```
-
-3. Access the application:
-- Frontend: http://localhost
-- Backend API: http://localhost:8000
-
-
-
 ## License
 
 MIT License
