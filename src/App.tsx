@@ -6,7 +6,8 @@ import 'react-toastify/dist/ReactToastify.css';
 import BPMNEditor from './components/BPMNEditor';
 import DCRSimulator from './components/DCRSimulator';
 import ResizableSplitter from './components/ResizableSplitter';
-import BPMN2DCRTranslationService from './services/translationService';
+import LoadingOverlay from './components/LoadingOverlay';
+import PyodideTranslationService from './services/pyodideTranslationService';
 
 
 const AppContainer = styled.div`
@@ -40,13 +41,28 @@ const PlaceholderSection = styled.div<{ $ratio: number }>`
 const App: React.FC = () => {
   const [dcrXml, setDcrXml] = useState<string | undefined>(undefined);
   const [isTranslating, setIsTranslating] = useState(false);
-  const [topRatio, setTopRatio] = useState(1); 
-  const [bottomRatio, setBottomRatio] = useState(1); 
-  const translationService = new BPMN2DCRTranslationService();
+  const [topRatio, setTopRatio] = useState(1);
+  const [bottomRatio, setBottomRatio] = useState(1);
+  const [isInitializingPyodide, setIsInitializingPyodide] = useState(true);
+  const translationService = React.useMemo(() => new PyodideTranslationService(), []);
+
+  // Initialize Pyodide on mount
+  useEffect(() => {
+    const initPyodide = async () => {
+      try {
+        await translationService.initialize();
+        setIsInitializingPyodide(false);
+      } catch (error) {
+        console.error('Failed to initialize Pyodide:', error);
+        setIsInitializingPyodide(false);
+        toast.error('Failed to load Python engine. Please refresh the page.');
+      }
+    };
+
+    initPyodide();
+  }, [translationService]);
 
   const handleBPMNChange = useCallback(async (bpmnXml: string) => {
-    console.log('BPMN model updated, length:', bpmnXml.length);
-    
     if (bpmnXml.length > 0) {
       setIsTranslating(true);
       try {
@@ -54,7 +70,6 @@ const App: React.FC = () => {
         if (result.success) {
           if (result.dcrXml) {
             setDcrXml(result.dcrXml);
-            console.log('DCR XML received from translation service');
           }
         } else {
           console.error('Translation failed:', result.error);
@@ -106,9 +121,11 @@ const App: React.FC = () => {
 
   return (
     <AppContainer>
+      {isInitializingPyodide && <LoadingOverlay />}
+
       <MainContent>
         <EditorSection $ratio={topRatio}>
-          <BPMNEditor 
+          <BPMNEditor
             onModelChange={handleBPMNChange}
             onError={handleError}
             onLoadSuccess={handleLoadSuccess}
@@ -126,7 +143,7 @@ const App: React.FC = () => {
         />
 
         <PlaceholderSection $ratio={bottomRatio}>
-          <DCRSimulator 
+          <DCRSimulator
             dcrXml={dcrXml}
             onError={handleError}
             isLoading={isTranslating}

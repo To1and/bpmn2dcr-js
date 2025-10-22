@@ -1,27 +1,16 @@
 <!--
  * @Author: Yue Zhou
- * @Date: 2025-10-22 22:59:45
+ * @Date: 2025-10-23 01:05:23
  * @LastEditors: Yue Zhou
- * @LastEditTime: 2025-10-22 23:09:40
+ * @LastEditTime: 2025-10-23 01:11:34
 -->
 # bpmn2dcr-js
 
-A real-time BPMN to DCR graph translation and simulation tool with a web-based interface.
+A real-time BPMN to DCR graph translation and simulation tool with a **pure frontend** web-based interface.
 
 ## Overview
 
 bpmn2dcr-js converts Business Process Model and Notation (BPMN) diagrams to Dynamic Condition Response (DCR) graphs through an automated translation engine. The tool provides a split-pane interface where users can create or import BPMN models and immediately view the corresponding DCR graph representation.
-
-## Features
-
-- **Real-time Translation**: Instant conversion from BPMN models to DCR graphs
-- **Gateway Support**: Full support for XOR, AND, and OR gateway patterns
-- **Interactive Editors**:
-  - BPMN editor with drag-and-drop capabilities (powered by bpmn-js)
-  - DCR graph visualization and simulation (powered by dcr-modeler)
-- **Import/Export**: Support for BPMN and DCR XML formats
-- **Simulation Mode**: Click events to simulate DCR graph execution
-- **Split-Pane Interface**: Simultaneous view of BPMN and DCR models
 
 ## Prerequisites
 
@@ -29,71 +18,66 @@ Before running the application, ensure you have the following installed:
 
 - Node.js (v16 or higher)
 - npm
-- Python 3.8+
-- pip
 
 ## Quick Start
 
-The easiest way to start the application is using the provided start scripts, which will automatically check and install all dependencies:
+The easiest way to start the application is using the provided start scripts:
 
 **Linux/macOS:**
+
 ```bash
 ./run.sh
 ```
 
 **Windows:**
+
 ```cmd
 run.bat
 ```
 
 That's it! The script will:
-1. Check if Node.js, Python, npm, and pip are installed
-2. Automatically install frontend dependencies (if not already installed)
-3. Automatically install backend dependencies (if not already installed)
-4. Start both frontend and backend servers
-5. Open the application at http://localhost:3001
 
-The backend API will be available at `http://localhost:8000`
+1. Check if Node.js and npm are installed
+2. Automatically install dependencies (if not already installed)
+3. Start the development server
+4. Open the application at <http://localhost:3001>
+
+**Note**: The first time you use the application, Pyodide will download Python runtime (~10MB) in the background. Subsequent uses will be faster.
 
 ## Manual Installation (Optional)
 
 If you prefer to install dependencies manually:
 
-### 1. Install Frontend Dependencies
+### 1. Install Dependencies
 
 ```bash
 npm install
 ```
 
-### 2. Install Backend Dependencies
-
-```bash
-cd bpmn2dcr-pycore
-pip install -r requirements.txt
-cd ..
-```
-
-### 3. Manual Start (Two Terminals)
-
-**Terminal 1 - Backend Server:**
-
-```bash
-cd bpmn2dcr-pycore
-python -m uvicorn server:app --reload --port 8000
-```
-
-**Terminal 2 - Frontend Development Server:**
+### 2. Start Development Server
 
 ```bash
 npm run dev
 ```
 
-### Access the Application
+### 3. Access the Application
 
 Open your browser and navigate to:
 
 ```
 http://localhost:3001
+```
+
+## Deployment
+
+Since this is a pure frontend application, you can easily deploy it to any static hosting service:
+
+```bash
+# Build for production
+npm run build
+
+# Deploy to GitHub Pages
+npm run deploy
 ```
 
 ## Usage

@@ -642,7 +642,7 @@ const DCRSimulator: React.FC<DCRSimulatorProps> = ({ dcrXml, onError, isLoading 
           
           // 检查是否有DCR事件元素，如果没有则跳过图形转换
           const allElements = elementRegistry ? elementRegistry.getAll() : [];
-          const dcrEvents = allElements.filter(el => el.type === 'dcr:Event');
+          const dcrEvents = allElements.filter((el: any) => el.type === 'dcr:Event');
           
           if (dcrEvents.length > 0) {
             const graph = dcrEngine.moddleToDCR(elementRegistry);

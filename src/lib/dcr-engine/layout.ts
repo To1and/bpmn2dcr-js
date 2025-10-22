@@ -129,7 +129,7 @@ const listToTree = (list: Array<{ id: string, parent: string }>) => {
 
     let trees = [];
 
-    const newList: Array<TempNode> = list.map((elem) => ({ ...elem, children: [] }));
+    const newList: Array<TempNode> = list.map((elem) => ({ ...elem, children: [] as TempNode[] }));
     for (let i = 0; i < newList.length; i += 1) {
         map[newList[i].id] = i; // initialize the map
     }

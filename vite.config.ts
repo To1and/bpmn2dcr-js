@@ -11,23 +11,18 @@ export default defineConfig({
     }
   },
   optimizeDeps: {
-    include: ['bpmn-js', 'elkjs', 'web-worker']
+    include: ['bpmn-js', 'elkjs', 'web-worker'],
+    exclude: ['pyodide']
   },
   server: {
     port: 3001,
     host: true,
-    allowedHosts: [
-      'localhost',
-      '127.0.0.1',
-      '.railway.app',
-      '.up.railway.app'
-    ],
-    proxy: {
-      '/api': {
-        target: 'http://127.0.0.1:8000',
-        changeOrigin: true,
-        rewrite: (path) => path.replace(/^\/api/, '')
-      }
+    headers: {
+      'Cross-Origin-Opener-Policy': 'same-origin',
+      'Cross-Origin-Embedder-Policy': 'require-corp'
     }
+  },
+  build: {
+    target: 'esnext'
   }
 })

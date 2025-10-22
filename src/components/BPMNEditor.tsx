@@ -27,11 +27,6 @@ const ToolbarContainer = styled.div`
   gap: 12px;
 `;
 
-const ButtonRow = styled.div`
-  display: flex;
-  gap: 12px;
-`;
-
 const DropdownContainer = styled.div`
   position: relative;
   display: inline-block;
