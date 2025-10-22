@@ -3,6 +3,12 @@ import react from '@vitejs/plugin-react'
 import path from 'path'
 
 export default defineConfig({
+  // 如果部署到 GitHub Pages，需要设置 base
+  // 格式: base: '/仓库名/'
+  // 例如: base: '/bpmn2dcr-js/'
+  // 如果是自定义域名或根路径，使用: base: '/'
+  base: process.env.GITHUB_PAGES === 'true' ? '/bpmn2dcr-js/' : '/',
+
   plugins: [react()],
   resolve: {
     alias: {
@@ -23,6 +29,7 @@ export default defineConfig({
     }
   },
   build: {
-    target: 'esnext'
+    target: 'esnext',
+    outDir: 'dist'
   }
 })

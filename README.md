@@ -8,6 +8,8 @@
 
 A real-time BPMN to DCR graph translation and simulation tool with a **pure frontend** web-based interface.
 
+**Live Demo**: https://to1and.github.io/bpmn2dcr-js/
+
 ## Overview
 
 bpmn2dcr-js converts Business Process Model and Notation (BPMN) diagrams to Dynamic Condition Response (DCR) graphs through an automated translation engine. The tool provides a split-pane interface where users can create or import BPMN models and immediately view the corresponding DCR graph representation.
