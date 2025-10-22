@@ -1,3 +1,9 @@
+<!--
+ * @Author: Yue Zhou
+ * @Date: 2025-10-22 22:59:45
+ * @LastEditors: Yue Zhou
+ * @LastEditTime: 2025-10-22 23:09:40
+-->
 # bpmn2dcr-js
 
 A real-time BPMN to DCR graph translation and simulation tool with a web-based interface.
@@ -48,8 +54,14 @@ You can start the application in two ways:
 
 ### Option 1: Using the Start Script (Recommended)
 
+**Linux/macOS:**
 ```bash
 ./run.sh
+```
+
+**Windows:**
+```cmd
+run.bat
 ```
 
 This will start both frontend and backend servers automatically.
@@ -57,12 +69,14 @@ This will start both frontend and backend servers automatically.
 ### Option 2: Manual Start (Two Terminals)
 
 **Terminal 1 - Backend Server:**
+
 ```bash
 cd bpmn2dcr-pycore
 python -m uvicorn server:app --reload --port 8000
 ```
 
 **Terminal 2 - Frontend Development Server:**
+
 ```bash
 npm run dev
 ```
@@ -70,6 +84,7 @@ npm run dev
 ### Access the Application
 
 Open your browser and navigate to:
+
 ```
 http://localhost:3001
 ```
