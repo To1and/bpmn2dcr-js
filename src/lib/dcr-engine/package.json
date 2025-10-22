@@ -1,0 +1,11 @@
+{
+  "name": "dcr-engine",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "DCR graph execution engine (extracted from dcr-js)",
+  "main": "index.ts",
+  "dependencies": {
+    "elkjs": "^0.10.0",
+    "fast-xml-parser": "^3.19.0"
+  }
+}

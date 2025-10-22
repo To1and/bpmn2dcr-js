@@ -124,6 +124,16 @@ venv.bak/
 # Custom
 .claude/
 
+# Null device files
 nul
 
-claude_doc/
+# Lock files from other package managers
+pnpm-lock.yaml
+yarn.lock
+
+# Test files in vendored libraries
+lib/**/test/
+lib/**/*.test.js
+lib/**/*.spec.js
+
+CLAUDE.md

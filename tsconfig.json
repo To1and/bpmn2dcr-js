@@ -20,11 +20,11 @@
 
     "baseUrl": ".",
     "paths": {
-      "dcr-modeler/*": ["./dcr-js/modeler/*"],
-      "dcr-engine/*": ["./dcr-js/dcr-engine/*"]
+      "dcr-modeler/*": ["./lib/dcr-modeler/*"],
+      "dcr-engine": ["./src/lib/dcr-engine/index.ts"],
+      "dcr-engine/*": ["./src/lib/dcr-engine/*"]
     }
   },
   "include": ["src"],
-  "exclude": ["dcr-js"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }

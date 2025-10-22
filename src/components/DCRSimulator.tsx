@@ -12,8 +12,8 @@ const loadDCRDependencies = async () => {
   
   try {
     const [modelerModule, engineModule] = await Promise.all([
-      import('../../dcr-js/modeler/index.js' as any),
-      import('../../dcr-js/dcr-engine/index.ts' as any)
+      import('../../lib/dcr-modeler/index.js' as any),
+      import('../lib/dcr-engine')
     ]);
     
     DCRModeler = modelerModule.default;

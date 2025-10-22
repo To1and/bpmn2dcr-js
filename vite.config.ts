@@ -6,12 +6,12 @@ export default defineConfig({
   plugins: [react()],
   resolve: {
     alias: {
-      'dcr-modeler': path.resolve(__dirname, 'dcr-js/modeler/index.js'),
-      'dcr-engine': path.resolve(__dirname, 'dcr-js/dcr-engine/index.ts')
+      'dcr-modeler': path.resolve(__dirname, 'lib/dcr-modeler/index.js'),
+      'dcr-engine': path.resolve(__dirname, 'src/lib/dcr-engine/index.ts')
     }
   },
   optimizeDeps: {
-    include: ['bpmn-js']
+    include: ['bpmn-js', 'elkjs', 'web-worker']
   },
   server: {
     port: 3001,
