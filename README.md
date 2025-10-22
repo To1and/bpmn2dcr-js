@@ -25,34 +25,16 @@ bpmn2dcr-js converts Business Process Model and Notation (BPMN) diagrams to Dyna
 
 ## Prerequisites
 
+Before running the application, ensure you have the following installed:
+
 - Node.js (v16 or higher)
 - npm
 - Python 3.8+
 - pip
 
-## Installation
+## Quick Start
 
-### 1. Install Frontend Dependencies
-
-```bash
-npm install
-```
-
-This will install all required dependencies for both the main project and the dcr-modeler library.
-
-### 2. Install Backend Dependencies
-
-```bash
-cd bpmn2dcr-pycore
-pip install -r requirements.txt
-cd ..
-```
-
-## Running the Application
-
-You can start the application in two ways:
-
-### Option 1: Using the Start Script (Recommended)
+The easiest way to start the application is using the provided start scripts, which will automatically check and install all dependencies:
 
 **Linux/macOS:**
 ```bash
@@ -64,9 +46,34 @@ You can start the application in two ways:
 run.bat
 ```
 
-This will start both frontend and backend servers automatically.
+That's it! The script will:
+1. Check if Node.js, Python, npm, and pip are installed
+2. Automatically install frontend dependencies (if not already installed)
+3. Automatically install backend dependencies (if not already installed)
+4. Start both frontend and backend servers
+5. Open the application at http://localhost:3001
 
-### Option 2: Manual Start (Two Terminals)
+The backend API will be available at `http://localhost:8000`
+
+## Manual Installation (Optional)
+
+If you prefer to install dependencies manually:
+
+### 1. Install Frontend Dependencies
+
+```bash
+npm install
+```
+
+### 2. Install Backend Dependencies
+
+```bash
+cd bpmn2dcr-pycore
+pip install -r requirements.txt
+cd ..
+```
+
+### 3. Manual Start (Two Terminals)
 
 **Terminal 1 - Backend Server:**
 
@@ -88,8 +95,6 @@ Open your browser and navigate to:
 ```
 http://localhost:3001
 ```
-
-The backend API will be available at `http://localhost:8000`
 
 ## Usage
 

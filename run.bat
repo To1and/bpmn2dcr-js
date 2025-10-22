@@ -43,8 +43,34 @@ REM Check if dependencies are installed
 echo [*] Checking dependencies...
 echo.
 
-if not exist "node_modules\" (
-    echo [x] Node modules not found. Please run: npm install
+REM Check Node.js
+where node >nul 2>&1
+if %errorlevel% neq 0 (
+    echo [x] Node.js is not installed. Please install Node.js v16 or higher.
+    pause
+    exit /b 1
+)
+
+REM Check Python
+where python >nul 2>&1
+if %errorlevel% neq 0 (
+    echo [x] Python is not installed. Please install Python 3.8 or higher.
+    pause
+    exit /b 1
+)
+
+REM Check npm
+where npm >nul 2>&1
+if %errorlevel% neq 0 (
+    echo [x] npm is not installed. Please install npm.
+    pause
+    exit /b 1
+)
+
+REM Check pip
+where pip >nul 2>&1
+if %errorlevel% neq 0 (
+    echo [x] pip is not installed. Please install pip.
     pause
     exit /b 1
 )
@@ -55,7 +81,47 @@ if not exist "bpmn2dcr-pycore\" (
     exit /b 1
 )
 
-echo [+] Dependencies found
+echo [+] Prerequisites found
+echo.
+
+REM Install Node dependencies if needed
+if not exist "node_modules\" (
+    echo [*] Node modules not found. Installing...
+    call npm install
+    if %errorlevel% equ 0 (
+        echo [+] Node dependencies installed successfully
+    ) else (
+        echo [x] Failed to install Node dependencies
+        pause
+        exit /b 1
+    )
+    echo.
+) else (
+    echo [+] Node dependencies found
+)
+
+REM Check and install Python dependencies if needed
+echo [*] Checking Python dependencies...
+cd bpmn2dcr-pycore
+
+REM Try to import required modules
+python -c "import fastapi, uvicorn, pydantic" >nul 2>&1
+if %errorlevel% neq 0 (
+    echo [*] Python dependencies missing. Installing...
+    pip install -r requirements.txt
+    if %errorlevel% equ 0 (
+        echo [+] Python dependencies installed successfully
+    ) else (
+        echo [x] Failed to install Python dependencies
+        cd ..
+        pause
+        exit /b 1
+    )
+) else (
+    echo [+] Python dependencies found
+)
+
+cd ..
 echo.
 
 REM Start backend server

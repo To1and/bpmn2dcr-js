@@ -73,9 +73,42 @@ echo ""
 # Check if dependencies are installed
 echo -e "${BLUE}📦 Checking dependencies...${NC}"
 
-if [ ! -d "node_modules" ]; then
-    echo -e "${YELLOW}⚠️  Node modules not found. Please run: npm install${NC}"
+# Check Node.js
+if ! command -v node &> /dev/null; then
+    echo -e "${RED}❌ Node.js is not installed. Please install Node.js v16 or higher.${NC}"
     exit 1
+fi
+
+# Check Python
+if ! command -v python3 &> /dev/null && ! command -v python &> /dev/null; then
+    echo -e "${RED}❌ Python is not installed. Please install Python 3.8 or higher.${NC}"
+    exit 1
+fi
+
+# Set Python command (python3 or python)
+if command -v python3 &> /dev/null; then
+    PYTHON_CMD="python3"
+else
+    PYTHON_CMD="python"
+fi
+
+# Check npm
+if ! command -v npm &> /dev/null; then
+    echo -e "${RED}❌ npm is not installed. Please install npm.${NC}"
+    exit 1
+fi
+
+# Check pip
+if ! command -v pip3 &> /dev/null && ! command -v pip &> /dev/null; then
+    echo -e "${RED}❌ pip is not installed. Please install pip.${NC}"
+    exit 1
+fi
+
+# Set pip command (pip3 or pip)
+if command -v pip3 &> /dev/null; then
+    PIP_CMD="pip3"
+else
+    PIP_CMD="pip"
 fi
 
 if [ ! -d "bpmn2dcr-pycore" ]; then
@@ -83,7 +116,45 @@ if [ ! -d "bpmn2dcr-pycore" ]; then
     exit 1
 fi
 
-echo -e "${GREEN}✅ Dependencies found${NC}"
+echo -e "${GREEN}✅ Prerequisites found${NC}"
+echo ""
+
+# Install Node dependencies if needed
+if [ ! -d "node_modules" ]; then
+    echo -e "${YELLOW}📦 Node modules not found. Installing...${NC}"
+    npm install
+    if [ $? -eq 0 ]; then
+        echo -e "${GREEN}✅ Node dependencies installed successfully${NC}"
+    else
+        echo -e "${RED}❌ Failed to install Node dependencies${NC}"
+        exit 1
+    fi
+    echo ""
+else
+    echo -e "${GREEN}✅ Node dependencies found${NC}"
+fi
+
+# Check and install Python dependencies if needed
+echo -e "${BLUE}📦 Checking Python dependencies...${NC}"
+cd bpmn2dcr-pycore
+
+# Try to import required modules
+$PYTHON_CMD -c "import fastapi, uvicorn, pydantic" 2>/dev/null
+if [ $? -ne 0 ]; then
+    echo -e "${YELLOW}📦 Python dependencies missing. Installing...${NC}"
+    $PIP_CMD install -r requirements.txt
+    if [ $? -eq 0 ]; then
+        echo -e "${GREEN}✅ Python dependencies installed successfully${NC}"
+    else
+        echo -e "${RED}❌ Failed to install Python dependencies${NC}"
+        cd ..
+        exit 1
+    fi
+else
+    echo -e "${GREEN}✅ Python dependencies found${NC}"
+fi
+
+cd ..
 echo ""
 
 # Start backend server
@@ -91,7 +162,7 @@ echo -e "${BLUE}🐍 Starting Python backend server...${NC}"
 cd bpmn2dcr-pycore
 
 # Start backend in background and save PID
-python -m uvicorn server:app --reload --port $BACKEND_PORT > /tmp/backend.log 2>&1 &
+$PYTHON_CMD -m uvicorn server:app --reload --port $BACKEND_PORT > /tmp/backend.log 2>&1 &
 BACKEND_PID=$!
 echo $BACKEND_PID > "$BACKEND_PID_FILE"
 
