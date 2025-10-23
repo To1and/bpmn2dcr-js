@@ -76,7 +76,20 @@ if [ ! -d "node_modules" ]; then
     fi
     echo ""
 else
-    echo -e "${GREEN}✅ Dependencies found${NC}"
+    # Check if critical packages are installed
+    if [ ! -d "node_modules/pyodide" ] || [ ! -d "node_modules/react" ] || [ ! -d "node_modules/vite" ]; then
+        echo -e "${YELLOW}📦 Some dependencies are missing. Installing...${NC}"
+        npm install
+        if [ $? -eq 0 ]; then
+            echo -e "${GREEN}✅ Dependencies installed successfully${NC}"
+        else
+            echo -e "${RED}❌ Failed to install dependencies${NC}"
+            exit 1
+        fi
+        echo ""
+    else
+        echo -e "${GREEN}✅ Dependencies found${NC}"
+    fi
 fi
 
 echo ""

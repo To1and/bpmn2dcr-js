@@ -64,7 +64,43 @@ if not exist "node_modules\" (
     )
     echo.
 ) else (
-    echo [+] Dependencies found
+    REM Check if critical packages are installed
+    if not exist "node_modules\pyodide\" (
+        echo [*] Some dependencies are missing. Installing...
+        call npm install
+        if %errorlevel% equ 0 (
+            echo [+] Dependencies installed successfully
+        ) else (
+            echo [x] Failed to install dependencies
+            pause
+            exit /b 1
+        )
+        echo.
+    ) else if not exist "node_modules\react\" (
+        echo [*] Some dependencies are missing. Installing...
+        call npm install
+        if %errorlevel% equ 0 (
+            echo [+] Dependencies installed successfully
+        ) else (
+            echo [x] Failed to install dependencies
+            pause
+            exit /b 1
+        )
+        echo.
+    ) else if not exist "node_modules\vite\" (
+        echo [*] Some dependencies are missing. Installing...
+        call npm install
+        if %errorlevel% equ 0 (
+            echo [+] Dependencies installed successfully
+        ) else (
+            echo [x] Failed to install dependencies
+            pause
+            exit /b 1
+        )
+        echo.
+    ) else (
+        echo [+] Dependencies found
+    )
 )
 
 echo.
